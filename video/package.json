@@ -1,0 +1,15 @@
+{
+  "name": "mars-launch-windows-video",
+  "private": true,
+  "scripts": {
+    "sound": "python3 voiceover.py && python3 soundtrack.py",
+    "studio": "remotion studio src/index.js",
+    "render": "remotion render src/index.js MarsWindows mars_launch_windows.mp4 --codec=h264 --crf=20"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.242",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.242"
+  }
+}

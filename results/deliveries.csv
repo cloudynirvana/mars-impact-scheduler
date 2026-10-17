@@ -1,0 +1,5 @@
+departs,arrives,target,miss_deg,impact_lon,impact_lat,swing_needed_deg,aim_offset_km,elevation_m,air_vs_datum,entry_speed_kms,arrival_shift_hours
+2028-11-30,2029-10-11,Chryse Planitia,0.0,320.0,27.0,4.8,412,-3857,1.42,5.94,3.8
+2031-02-22,2032-01-08,Chryse Planitia,0.0,320.0,27.0,1.2,87,-3857,1.42,7.45,0.47
+2033-04-28,2034-01-27,Isidis Planitia,0.0,87.0,12.9,3.5,259,-3792,1.41,6.66,-5.43
+2035-05-30,2036-01-04,Elysium Planitia,0.0,135.9,4.5,1.0,89,-2650,1.27,5.81,-7.08
