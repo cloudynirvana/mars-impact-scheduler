@@ -1,4 +1,4 @@
-"""Synthesize the soundtrack (97 s, stereo) and mix the voiceover over it.
+"""Synthesize the soundtrack (118 s, stereo) and mix the voiceover over it.
 
 The music is all generated here: no samples, so nothing to license. The
 voiceover lines are vo/line_N.wav, made by voiceover.py, and the music ducks
@@ -9,15 +9,15 @@ from pathlib import Path
 
 import numpy as np
 
-SR, DUR = 44100, 97.0
+SR, DUR = 44100, 118.0
 t = np.arange(int(SR * DUR)) / SR
 L, R = np.zeros_like(t), np.zeros_like(t)
 rng = np.random.default_rng(11)
 note = lambda m: 440 * 2 ** ((m - 69) / 12)
 
 # One line per scene; keep in step with SCENES in src/Film.jsx.
-VO_START = [1.5, 8.8, 17.8, 27.8, 43.8, 54.4, 63.4, 70.6, 89.6]
-SCENE_EDGE = [8, 17, 27, 43, 54, 63, 70, 89]
+VO_START = [1.5, 8.8, 17.8, 27.8, 43.8, 54.4, 63.4, 70.6, 89.6, 110.4]
+SCENE_EDGE = [8, 17, 27, 43, 54, 63, 70, 89, 109.83]
 
 
 def env(start, attack, decay):
@@ -31,7 +31,7 @@ def lowpass(x, k):
 
 # A slow minor progression, two bars each: Dm - Bb - F - C, repeating.
 chords = [[38, 50, 53, 57], [34, 46, 50, 53], [41, 53, 57, 60], [36, 48, 52, 55]]
-for i in range(8):
+for i in range(10):
     s, e = i * 12.0, i * 12.0 + 13.5
     w = np.clip((t - s) / 2.5, 0, 1) * np.clip((e - t) / 2.5, 0, 1)
     for m in chords[i % 4]:
@@ -72,6 +72,12 @@ w = np.clip((t - 80) / 2.5, 0, 1) * np.clip((92 - t) / 3, 0, 1)
 for m in (31, 38, 50):
     L += 0.05 * w * np.sin(2 * np.pi * note(m) * t)
     R += 0.05 * w * np.sin(2 * np.pi * note(m) * 1.004 * t)
+
+# The payload scene: a held low chord, no pulse, so the close has air.
+w = np.clip((t - 90) / 4, 0, 1) * np.clip((110 - t) / 4, 0, 1)
+for m in (36, 48, 55, 60):
+    L += 0.045 * w * np.sin(2 * np.pi * note(m) * t)
+    R += 0.045 * w * np.sin(2 * np.pi * note(m) * 1.004 * t + 0.7)
 
 # Voiceover, with the music ducked underneath it.
 vo = np.zeros_like(t)

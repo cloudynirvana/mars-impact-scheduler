@@ -6,4 +6,5 @@ Now the part that surprised me. Once you have picked your trajectory, the direct
 So shift your arrival by a few hours, and the same trajectory lands you on a different continent. The longitude is free. You just choose the minute you arrive.
 Latitude is what you pay for. You buy it by aiming off centre, and letting the planet's gravity bend you round.
 Which leads to the awkward result. Hellas is the deepest basin on Mars, six kilometres down, with nearly twice the air to brake against. It is the best place to arrive. And it is the most expensive target in all four windows, because it sits far into the south, while every one of these approaches comes in near the equator.
+One thing this does not decide is what arrives. Martian soil carries perchlorate salts. Toxic to us, and to anything we would want to grow. What I modelled is a soil conditioning package aimed at them, not a living one. Deliberately delivering organisms to Mars is barred under the Outer Space Treaty. The trajectory mathematics is identical either way.
 The trajectory wants the equator. The entry physics wants Hellas. Somebody has to choose.

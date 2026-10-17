@@ -330,7 +330,61 @@ const Hellas = ({d}) => {
   </AbsoluteFill>;
 };
 
-// ---------------------------------------------------------------- 9. close
+// ---------------------------------------------------------------- 9. what arrives
+const Payload = ({d}) => {
+  const f = useCurrentFrame();
+  // A jittered grid, so the salts read as scattered through the soil without
+  // any two labels landing on top of each other.
+  const grains = React.useMemo(() => Array.from({length: 18}, (_, i) => {
+    const r = Math.sin(i * 91.7) * 43758.5453, q = Math.sin(i * 37.3) * 12543.7891;
+    return {x: 66 + (i % 3) * 145 + (r - Math.floor(r)) * 36,
+            y: 72 + Math.floor(i / 3) * 34 + (q - Math.floor(q)) * 14};
+  }), []);
+  const dig = interpolate(f, [40, 150], [0, 1], {...clamp, easing: ease});
+  return <AbsoluteFill style={{opacity: fade(f, d), padding: '86px 140px'}}>
+    <Rise><H1 size={54}>One thing this does not decide: what arrives.</H1></Rise>
+    <div style={{display: 'flex', gap: 100, marginTop: 54}}>
+      <div style={{width: 740}}>
+        <Rise delay={18}><Sub size={33} color={C.ink}>Martian soil carries perchlorate salts.
+          NASA's Phoenix lander found them in 2008.</Sub></Rise>
+        <div style={{height: 26}} />
+        <Rise delay={38}><Sub size={29}>Toxic to us, and to anything we would want to grow in it.</Sub></Rise>
+        <div style={{height: 52}} />
+        <div style={{opacity: interpolate(f, [200, 240], [0, 1], clamp)}}>
+          <Sub size={29} color={C.ink}>What I modelled is a soil-conditioning package aimed at them.
+            Not a living one.</Sub>
+        </div>
+        <div style={{height: 26}} />
+        <div style={{opacity: interpolate(f, [330, 370], [0, 1], clamp)}}>
+          <Sub size={25}>Deliberately delivering organisms to Mars is barred under Outer Space
+            Treaty Article IX and COSPAR planetary protection.</Sub>
+        </div>
+      </div>
+      <div style={{width: 620}}>
+        <svg width="600" height="330">
+          <text x="40" y="22" fill={C.dim} fontSize="21" fontFamily={font}>the top few centimetres</text>
+          <rect x="40" y="34" width="520" height="240" rx="4" fill="#2a1409" stroke={C.line} strokeWidth="2" />
+          {grains.map((g, i) => {
+            const on = Math.min(1, Math.max(0, dig * grains.length - i));
+            return <g key={i} opacity={on * 0.95}>
+              <circle cx={g.x} cy={g.y} r="5" fill={C.sand} />
+              <text x={g.x + 11} y={g.y + 6} fill={C.sand} fontSize="16" fontFamily={font}
+                opacity="0.8">ClO₄⁻</text>
+            </g>;
+          })}
+          <text x="40" y="300" fill={C.dim} fontSize="20" fontFamily={font}>
+            a fraction of a percent by weight, and that is enough
+          </text>
+        </svg>
+      </div>
+    </div>
+    <div style={{marginTop: 26, opacity: interpolate(f, [470, 510], [0, 1], clamp)}}>
+      <Sub size={34} color={C.rust}>The trajectory mathematics is identical either way.</Sub>
+    </div>
+  </AbsoluteFill>;
+};
+
+// --------------------------------------------------------------- 10. close
 const End = ({d}) => {
   const f = useCurrentFrame();
   return <AbsoluteFill style={{opacity: interpolate(f, [0, 20], [0, 1], clamp), justifyContent: 'center', alignItems: 'center', textAlign: 'center'}}>
@@ -350,8 +404,10 @@ const End = ({d}) => {
 // ---------------------------------------------------------------- assembly
 const SCENES = [
   [Orbits, 240], [Search, 270], [Porkchop, 300], [Trade, 480],
-  [Locked, 330], [Longitude, 270], [Latitude, 210], [Hellas, 570], [End, 240],
+  [Locked, 330], [Longitude, 270], [Latitude, 210], [Hellas, 570],
+  [Payload, 625], [End, 240],
 ];
+export const TOTAL = SCENES.reduce((a, [, d]) => a + d, 0);
 
 export const Film = () => {
   let at = 0;
